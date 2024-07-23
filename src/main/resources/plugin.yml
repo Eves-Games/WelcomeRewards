@@ -1,0 +1,4 @@
+name: WelcomeRewards
+version: '${project.version}'
+main: net.worldmc.welcomerewards.WelcomeRewards
+api-version: '1.21'
