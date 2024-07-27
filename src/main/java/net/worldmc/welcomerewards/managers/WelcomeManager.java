@@ -1,6 +1,7 @@
 package net.worldmc.welcomerewards.managers;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.worldmc.morpheus.api.MorpheusAPI;
 import net.worldmc.welcomerewards.WelcomeRewards;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -13,6 +14,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class WelcomeManager {
+
+    private final MorpheusAPI morpheusAPI;
     private final String triggerWord;
     private final int windowSeconds;
     private final ItemStack rewardItem;
@@ -27,6 +30,7 @@ public class WelcomeManager {
     public WelcomeManager(WelcomeRewards plugin) {
         FileConfiguration config = plugin.getConfig();
 
+        this.morpheusAPI = plugin.getMorpheusAPI();
         this.triggerWord = config.getString("trigger-word", "welcome");
         this.windowSeconds = config.getInt("window", 10);
         this.rewardItem = new ItemStack(Material.valueOf(config.getString("reward.item", "GOLD_NUGGET")),
@@ -46,7 +50,8 @@ public class WelcomeManager {
         if (currentTime - latestJoinTime <= windowSeconds * 1000L && !rewardedPlayers.contains(sender.getUniqueId())) {
             sender.getInventory().addItem(rewardItem);
             sender.playSound(sender.getLocation(), rewardSound, 1.0f, 1.0f);
-            sender.sendMessage(miniMessage.deserialize(rewardMessage));
+
+            morpheusAPI.sendPlayerMessage(sender, rewardMessage, true);
             rewardedPlayers.add(sender.getUniqueId());
         }
     }

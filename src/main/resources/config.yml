@@ -4,4 +4,4 @@ reward:
   item: "GOLD_NUGGET"
   amount: 5
   sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
-  message: "<gray>[<b><gradient:#00AA00:#FFAA00>WorldMC</gradient></b>] <green>Thanks for welcoming a new player, you've received <yellow>5 gold nuggets</yellow> as a gift!"
+  message: "Thanks for welcoming a new player, you've received <yellow>5 gold nuggets</yellow> as a gift!"

@@ -1,5 +1,7 @@
 package net.worldmc.welcomerewards;
 
+import net.worldmc.morpheus.Morpheus;
+import net.worldmc.morpheus.api.MorpheusAPI;
 import net.worldmc.welcomerewards.listeners.PlayerChatListener;
 import net.worldmc.welcomerewards.listeners.PlayerJoinListener;
 import net.worldmc.welcomerewards.managers.WelcomeManager;
@@ -7,9 +9,13 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WelcomeRewards extends JavaPlugin {
+    private MorpheusAPI morpheusAPI;
 
     @Override
     public void onEnable() {
+        if (getServer().getPluginManager().getPlugin("Morpheus") instanceof Morpheus)
+            morpheusAPI = Morpheus.getAPI();
+
         saveDefaultConfig();
 
         WelcomeManager welcomeManager = new WelcomeManager(this);
@@ -19,8 +25,7 @@ public final class WelcomeRewards extends JavaPlugin {
         pluginManager.registerEvents(new PlayerJoinListener(welcomeManager), this);
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public MorpheusAPI getMorpheusAPI() {
+        return morpheusAPI;
     }
 }
